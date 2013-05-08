@@ -1,10 +1,10 @@
 require 'test_helper'
-require 'phorminx/active_record_inspector'
+require 'phorminx/active_record/inspector'
 
-describe Phorminx::ActiveRecordInspector do
+describe Phorminx::ActiveRecord::Inspector do
   describe "defaults" do
     before do
-      @inspector = Phorminx::ActiveRecordInspector.new
+      @inspector = Phorminx::ActiveRecord::Inspector.new
     end
 
     it "uses the PWD as the root" do
@@ -23,7 +23,7 @@ describe Phorminx::ActiveRecordInspector do
 
   describe "in a Rails project" do
     before do
-      @inspector = Phorminx::ActiveRecordInspector.new(:root => '../test/rails2')
+      @inspector = Phorminx::ActiveRecord::Inspector.new(:root => '../../test/rails2')
     end
 
     it "has its root in the Rails app" do
