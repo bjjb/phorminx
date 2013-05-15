@@ -1,0 +1,16 @@
+#!/usr/bin/env ruby
+
+if File.exist?(env = File.expand_path('config/environment.rb'))
+  require env
+  require "phorminx"
+  Dir["app/models/**/*.rb"].each do |f|
+    begin
+      require(f)
+    rescue => e
+      puts "[W] => #{e}"
+    end
+  end
+  puts ActiveRecord.export
+else
+  puts "Please run this in the root of a Rails app"
+end

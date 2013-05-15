@@ -28,6 +28,7 @@ def create_table(*args, &block)
 end
 
 ActiveRecord::Base.connection.create_table :users do |t|
+  t.string :type
   t.string :email
   t.string :name
   t.timestamps
@@ -90,6 +91,9 @@ end
 
 class User < ActiveRecord::Base
   has_many :wares, :class_name => 'Product'
+end
+
+class Admin < User
 end
 
 alice = User.create! { |u| u.email, u.name = 'alice@example.com', 'Alice' }
