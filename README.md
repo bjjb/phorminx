@@ -5,6 +5,9 @@ application and extract _just_ the ActiveRecord classes. Then plug those into
 your Rails re-write! Or just use it to play around with the database, or
 something.
 
+It was written to make a really simple and fast console ActiveRecord application
+on top of a really old Rails 2 application's database.
+
 ## Installation
 
     $ gem install phorminx
