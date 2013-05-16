@@ -51,13 +51,8 @@ module Phorminx
           options.inspect unless options.empty?
         end
 
-        def conditions
-          conditions = @reflection.conditions
-          conditions.inspect unless conditions.all?(&:empty?)
-        end
-
         def to_s
-          [definition, options, conditions].compact.join(', ')
+          [definition, options].compact.join(', ')
         end
       end
 
