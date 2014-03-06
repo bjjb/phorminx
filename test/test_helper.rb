@@ -8,16 +8,17 @@ module Workspace
   end
 
   def workspace
-    @@workspace ||= 'tmp/phorminx'
+    @@workspace ||= 'tmp/dummy'
   end
 
   def within(branch)
     branch = branch.to_s
     old = Dir.pwd
     Dir.chdir(workspace)
-    system "git reset -q --hard HEAD"
     system "git checkout -q #{branch}"
+    system "git reset -q --hard HEAD"
     result = yield
+    system "git checkout -q master"
     Dir.chdir(old)
     result
   end
