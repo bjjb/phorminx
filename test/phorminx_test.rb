@@ -1,6 +1,7 @@
 require 'test_helper'
 require 'phorminx'
 require 'pathname'
+require 'tempfile'
 
 describe Phorminx do
   it "is totally rad" do
@@ -18,7 +19,8 @@ describe Phorminx do
   end
 
   it "has a logger" do
-    Phorminx.logger.must_be_kind_of Logger
+    phorminx = Class.new { include Phorminx }.new
+    phorminx.logger.must_be_kind_of Logger
   end
 
   it "is bundled as a beautiful gem" do
@@ -28,17 +30,28 @@ describe Phorminx do
   end
 
   it "can tell which environment its running in" do
+    phorminx = Class.new { include Phorminx }.new
     within :rails2 do
-      Phorminx.must_be :rails?
-      Phorminx.must_be :rails2?
+      phorminx.must_be :rails?
+      phorminx.must_be :rails2?
     end
     within :rails3 do
-      Phorminx.must_be :rails?
-      Phorminx.must_be :rails3?
+      phorminx.must_be :rails?
+      phorminx.must_be :rails3?
     end
     within :rails4 do
-      Phorminx.must_be :rails?
-      Phorminx.must_be :rails4?
+      phorminx.must_be :rails?
+      phorminx.must_be :rails4?
+    end
+  end
+
+  it "gives a loader" do
+    Phorminx.loader.must_be_kind_of Phorminx::Loader
+  end
+
+  it "gives us the right runner" do
+    within :rails2 do
+      runner = Phorminx.runner
     end
   end
 end

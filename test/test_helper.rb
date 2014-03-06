@@ -18,7 +18,9 @@ module Workspace
     system "git checkout -q #{branch}"
     system "git reset -q --hard HEAD"
     result = yield
+    system "git reset -q --hard HEAD"
     system "git checkout -q master"
+  ensure
     Dir.chdir(old)
     result
   end
@@ -26,9 +28,9 @@ module Workspace
   def setup
     unless File.directory?(workspace)
       FileUtils.mkdir_p workspace
-      system "git clone git://github.com/bjjb/dummy-webapps.git '#{workspace}'"
+      system "git clone -q git://github.com/bjjb/dummy-webapps.git '#{workspace}'"
     end
   end
 end
 
-puts MiniTest::Test.extend Workspace
+MiniTest::Test.extend Workspace

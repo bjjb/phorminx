@@ -1,28 +1,40 @@
 require 'pathname'
 
 module Phorminx
-  autoload :VERSION, 'phorminx/version'
-  autoload :CLI, 'phorminx/cli'
-  autoload :Logging, 'phorminx/logging'
+  autoload :VERSION,    'phorminx/version'
+  autoload :Logging,    'phorminx/logging'
+  autoload :CLI,        'phorminx/cli'
+  autoload :Rails,      'phorminx/rails'
+  autoload :Loader,     'phorminx/loader'
+  autoload :Inspector,  'phorminx/inspector'
+  autoload :Formatter,  'phorminx/formatter'
+  autoload :Runner,     'phorminx/runner'
 
-  extend Logging
+  include Logging
+  include Rails   # app detection
 
-  module Rails
-    def rails?
-      rails2? or rails3? or rails4?
-    end
+  def self.loader
+    Loader.new
+  end
 
-    def rails2?
-      Pathname.new('.').join('config/environment.rb').exist?
-    end
+  def self.inspector
+    Inspector.new
+  end
 
-    def rails3?
-      Pathname.new('.').join('config/application.rb').exist?
-    end
+  def self.formatter
+    @formatter ||= Formatter::JSON.new
+  end
 
-    def rails4?
-      Pathname.new('.').join('config/application.rb').exist?
+  def self.formatter=(f)
+    @formatter = case f
+      when Formatter then f
+      when symbol    then Formatter.load(f)
+      when Proc      then Class.new(Formatter, &f)
+      else           raise Formatter::Unknown, f.to_s
     end
   end
-  extend Rails
+
+  def self.runner
+    Runner.new(loader, inspector, formatter)
+  end
 end

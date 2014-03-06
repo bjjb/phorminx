@@ -1,3 +1,4 @@
+require 'phorminx'
 require 'logger'
 
 module Phorminx
