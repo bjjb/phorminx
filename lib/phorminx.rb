@@ -6,9 +6,10 @@ module Phorminx
   autoload :CLI,        'phorminx/cli'
   autoload :Rails,      'phorminx/rails'
   autoload :Loader,     'phorminx/loader'
-  autoload :Inspector,  'phorminx/inspector'
+  autoload :Analyser,   'phorminx/analyser'
   autoload :Formatter,  'phorminx/formatter'
   autoload :Runner,     'phorminx/runner'
+  autoload :Graph,      'phorminx/graph'
 
   include Logging
   include Rails   # app detection
@@ -17,8 +18,8 @@ module Phorminx
     Loader.new
   end
 
-  def self.inspector
-    Inspector.new
+  def self.analyser
+    Analyser.new
   end
 
   def self.formatter
@@ -35,6 +36,6 @@ module Phorminx
   end
 
   def self.runner
-    Runner.new(loader, inspector, formatter)
+    Runner.new(loader, analyser, formatter)
   end
 end

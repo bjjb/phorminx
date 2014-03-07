@@ -1,8 +1,11 @@
 module Phorminx
   class Runner
-    include Phorminx
-    def initialize(loader, inspector, formatter)
-      @loader, @inspector, @formatter = loader, inspector, formatter
+    def initialize(loader, analyser, formatter)
+      @loader, @analyser, @formatter = loader, analyser, formatter
+    end
+
+    def run
+      @formatter.format(@analyser.analyse(@loader.load))
     end
   end
 end

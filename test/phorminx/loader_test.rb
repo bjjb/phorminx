@@ -66,5 +66,4 @@ describe Phorminx::Loader do
       end
     end
   end
-
 end
